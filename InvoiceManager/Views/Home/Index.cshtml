@@ -8,7 +8,7 @@
 
 <button 
     class="btn btn-primary mb-3"
-    onclick="@Url.Action("Invoice","Home")">
+    onclick='window.location.href="@Url.Action("Invoice","Home")"'>
     Dodaj
 </button>
 
@@ -29,7 +29,12 @@
             @foreach(var invoice in Model)
                 {
             <tr>
-                <td>@invoice.Title</td>
+                <td>
+                    <a href="@Url.Action("Invoice","Home",
+                            new { id = invoice.Id })">
+                    @invoice.Title
+                    </a>
+                </td>
                 <td>@invoice.Client.Name</td>
                 <td>@invoice.Value zł</td>
                 <td>@invoice.CreateDate.ToString("dd-MM-yyyy")</td>

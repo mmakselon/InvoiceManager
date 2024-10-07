@@ -1,0 +1,57 @@
+﻿@model InvoiceManager.Models.ViewModels.EditInvoiceViewModel
+@{
+    ViewBag.Title = "Invoice";
+}
+
+<h1 class="mb-3">@Model.Heading</h1>
+
+@if (Model.Invoice.Id != 0)
+{
+    <button class="btn btn-primary mb-3"
+            onlick='window.location.href="@Url.Action("InvoicPositione", "Home",
+new { invoiceId = Model.Invoice.Id })"'>
+        Dodaj pozycję
+    </button>
+    <button class="btn btn-secondary mb-3" onclick="generatePdf()">
+        Generuj PDF
+    </button>
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        @using (Html.BeginForm("Invoice", "Home"))
+        {
+            if (Model.Invoice.Id == 0)
+            {
+                <p class="alert alert-info mt-4 mb-4">
+                    Pola tytuł, klient, sposób płatności i termin zapłaty są
+                    <strong>wymagane</strong>.
+                </p>
+
+                @Html.HiddenFor(x => x.Invoice.Id)
+                @Html.HiddenFor(x => x.Invoice.UserId)
+                @Html.HiddenFor(x => x.Invoice.CreateDate)
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Invoice.Title)
+                    @Html.TextBoxFor(x => x.Invoice.Title,
+                   new { @class = "form-control", autofocus = "autofocus" })
+
+                </div>
+            }
+        }
+    </div>
+    <div class="col-5 offset=lg-1">
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function generatePdf() {
+
+        }
+    </script>
+}
+
