@@ -103,8 +103,7 @@ new { invoiceId = Model.Invoice.Id })"'>
 
         }
 
-        $(dokument).ready(function ()
-        {
+        $(document).ready(function () {
             $('#PaymentDate').datepicker({
                 format: "dd-mm-yyy",
                 language: "pl",
@@ -113,7 +112,7 @@ new { invoiceId = Model.Invoice.Id })"'>
                 todayHighlight: true,
                 forceParse: false
             });
-        }
+        });
 
     </script>
 }
