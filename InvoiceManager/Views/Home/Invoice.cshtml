@@ -1,6 +1,6 @@
 ﻿@model InvoiceManager.Models.ViewModels.EditInvoiceViewModel
 @{
-    ViewBag.Title = "Invoice";
+    ViewBag.Title = Model.Heading;
 }
 
 <h1 class="mb-3">@Model.Heading</h1>
@@ -8,8 +8,8 @@
 @if (Model.Invoice.Id != 0)
 {
     <button class="btn btn-primary mb-3"
-            onlick='window.location.href="@Url.Action("InvoicPositione", "Home",
-new { invoiceId = Model.Invoice.Id })"'>
+            onclick='window.location.href="@Url.Action("InvoicePosition", "Home",
+            new { invoiceId = Model.Invoice.Id })"'>
         Dodaj pozycję
     </button>
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">
@@ -27,71 +27,71 @@ new { invoiceId = Model.Invoice.Id })"'>
                     Pola tytuł, klient, sposób płatności i termin zapłaty są
                     <strong>wymagane</strong>.
                 </p>
-
-                @Html.HiddenFor(x => x.Invoice.Id)
-                @Html.HiddenFor(x => x.Invoice.UserId)
-                @Html.HiddenFor(x => x.Invoice.CreateDate)
-
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Invoice.Title)
-                    @Html.TextBoxFor(x => x.Invoice.Title,
-                        new { @class = "form-control", autofocus = "autofocus" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Invoice.ClientId)
-                    @Html.DropDownListFor(x => x.Invoice.ClientId,
-                    new SelectList(Model.Clients, "Id", "Name"),
-                    "-- Wybierz klienta --",
-                        new { @class = "form-control" })
-                </div>
-
-                if (Model.Invoice.Id != 0)
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Invoice.Value)
-                        @Html.TextBoxFor(x => x.Invoice.Value,
-                            new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                }
-
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
-                    @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId,
-                    new SelectList(Model.MethodOfPayments, "Id", "Name"),
-                    "-- Wybierz sposób płatności --",
-                        new { @class = "form-control" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Invoice.PaymentDate)
-                    @Html.TextBoxFor(x => x.Invoice.PaymentDate,
-                    "{0:dd-MM-yyyy}",
-                        new
-                        {
-                            @class = "form-control",
-                            @id="PaymentDate",
-                            autocomplete="off" 
-                        })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Invoice.Comments)
-                    @Html.TextAreaFor(x => x.Invoice.Comments,
-                        new { @class = "form-control"})
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg mb-5">
-                    Zapisz
-                </button>
             }
+
+            @Html.HiddenFor(x => x.Invoice.Id)
+            @Html.HiddenFor(x => x.Invoice.UserId)
+            @Html.HiddenFor(x => x.Invoice.CreateDate)
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Invoice.Title)
+                @Html.TextBoxFor(x => x.Invoice.Title,
+                    new { @class = "form-control", autofocus = "autofocus" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Invoice.ClientId)
+                @Html.DropDownListFor(x => x.Invoice.ClientId,
+                new SelectList(Model.Clients, "Id", "Name"),
+                "-- Wybierz klienta --",
+                    new { @class = "form-control" })
+            </div>
+
+            if (Model.Invoice.Id != 0)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Invoice.Value)
+                    @Html.TextBoxFor(x => x.Invoice.Value,
+                        new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
+                @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId,
+                new SelectList(Model.MethodOfPayments, "Id", "Name"),
+                "-- Wybierz sposób płatności --",
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Invoice.PaymentDate)
+                @Html.TextBoxFor(x => x.Invoice.PaymentDate,
+                "{0:dd-MM-yyyy}",
+                    new
+                    {
+                        @class = "form-control",
+                        @id = "PaymentDate",
+                        autocomplete = "off"
+                    })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Invoice.Comments)
+                @Html.TextAreaFor(x => x.Invoice.Comments,
+                    new { @class = "form-control" })
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg mb-5">
+                Zapisz
+            </button>
         }
     </div>
 
-    <div class="col-5 offset=lg-1">
-        @if (Model.Invoice.Id!=0)
+    <div class="col-5 offset-lg-1">
+        @if (Model.Invoice.Id != 0)
         {
-            @Html.Partial("_InvoicePosition",Model.Invoice.InvoicePositions)
+            @Html.Partial("_InvoicePosition", Model.Invoice.InvoicePositions)
         }
     </div>
 </div>
@@ -103,9 +103,14 @@ new { invoiceId = Model.Invoice.Id })"'>
 
         }
 
+        function deleteInvoicePosition() {
+            if (!confirm("Czy na pewno chcesz usunąć pozycję?"))
+                return;
+        }
+
         $(document).ready(function () {
             $('#PaymentDate').datepicker({
-                format: "dd-mm-yyy",
+                format: "dd-mm-yyyy",
                 language: "pl",
                 multidate: false,
                 autoclose: true,

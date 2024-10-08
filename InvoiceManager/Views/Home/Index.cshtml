@@ -17,12 +17,12 @@
     <table class="table table-hover table-striped mt-3 mb-5">
         <thead>
             <tr>
-                <th scope="cool">Tytuł</th>
-                <th scope="cool">Klient</th>
-                <th scope="cool">Wartość</th>
-                <th scope="cool">Data utworzenia</th>
-                <th scope="cool">Termin płatności</th>
-                <th scope="cool"></th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Klient</th>
+                <th scope="col">Wartość</th>
+                <th scope="col">Data utworzenia</th>
+                <th scope="col">Termin płatności</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -30,14 +30,16 @@
                 {
             <tr>
                 <td>
-                    <a href="@Url.Action("Invoice","Home",
+                    <a 
+                           class="font-weight-bold"
+                       href="@Url.Action("Invoice","Home",
                             new { id = invoice.Id })">
                     @invoice.Title
                     </a>
                 </td>
                 <td>@invoice.Client.Name</td>
                 <td>@invoice.Value zł</td>
-                <td>@invoice.CreateDate.ToString("dd-MM-yyyy")</td>
+                    <td>@invoice.CreateDate.ToString("dd-MM-yyyy")</td>
                 <td>@invoice.PaymentDate.ToString("dd-MM-yyyy")</td>
                 <td>
                     <button 
@@ -63,7 +65,6 @@
 {
     <script type="text/javascript">
         function deleteInvoice() {
-
             if (!confirm("Czy na pewno chcesz usunąć fakturę?"))
                 return;
         }
