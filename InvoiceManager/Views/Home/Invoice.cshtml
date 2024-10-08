@@ -67,7 +67,12 @@ new { invoiceId = Model.Invoice.Id })"'>
                     @Html.LabelFor(x => x.Invoice.PaymentDate)
                     @Html.TextBoxFor(x => x.Invoice.PaymentDate,
                     "{0:dd-MM-yyyy}",
-                        new { @class = "form-control" })
+                        new
+                        {
+                            @class = "form-control",
+                            @id="PaymentDate",
+                            autocomplete="off" 
+                        })
                 </div>
 
                 <div class="form-group">
@@ -97,6 +102,19 @@ new { invoiceId = Model.Invoice.Id })"'>
         function generatePdf() {
 
         }
+
+        $(dokument).ready(function ()
+        {
+            $('#PaymentDate').datepicker({
+                format: "dd-mm-yyy",
+                language: "pl",
+                multidate: false,
+                autoclose: true,
+                todayHighlight: true,
+                forceParse: false
+            });
+        }
+
     </script>
 }
 
