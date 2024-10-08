@@ -1,4 +1,5 @@
 ﻿using InvoiceManager.Models.Domains;
+using InvoiceManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,15 @@ namespace InvoiceManager.Controllers
 
         public ActionResult Invoice( int id = 0)
         {
-            return View();
+            var vm = new EditInvoiceViewModel
+            {
+                Clients = new List<Client> { new Client { Id = 1, Name = "Klient 1" } },
+                MethodOfPayments = new List<MethodOfPayment> { new MethodOfPayment { Id = 1, Name = "Przelew" } },
+                Heading = "Edycja faktury",
+                Invoice = new Invoice()
+            };
+
+            return View(vm);
         }
 
         [AllowAnonymous]
