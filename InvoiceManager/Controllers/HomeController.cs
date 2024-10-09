@@ -126,9 +126,48 @@ namespace InvoiceManager.Controllers
             else
                 _invoiceRepository.UpdatePosition(invoicePosition,userId);
 
-            _invoiceRepository.UpdateInvoiceValue(invoicePosition.InvoiceId);
+            _invoiceRepository
+                .UpdateInvoiceValue(invoicePosition.InvoiceId, userId);
 
             return RedirectToAction("Invoice",new { id=invoicePosition.InvoiceId});
+        }
+
+        [HttpPost]
+        public ActionResult Delete (int id)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _invoiceRepository.Delete(id, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false,Message= exception.Message});
+            }
+            
+            return Json(new { Success = true });
+        }
+
+        [HttpPost]
+        public ActionResult DeletePosition(int id, int invoiceId)
+        {
+            var invoiceValue = 0m;
+
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _invoiceRepository.DeletePosition(id, userId);
+                invoiceValue = _invoiceRepository
+                    .UpdateInvoiceValue(invoiceId, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message });
+            }
+
+            return Json(new { Success = true, InvoiceValue= invoiceValue });
         }
 
         [AllowAnonymous]
