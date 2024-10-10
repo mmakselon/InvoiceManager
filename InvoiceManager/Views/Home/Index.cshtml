@@ -44,7 +44,7 @@
                 <td>
                     <button 
                         class="btn btn-danger btn-sm"
-                        onclick="deleteInvoice('@invoice.id')">
+                            onclick="deleteInvoice('@invoice.Id', this)">
                         Usuń
                     </button>
                 </td>
@@ -64,7 +64,9 @@
 @section Scripts
 {
     <script type="text/javascript">
-        function deleteInvoice(id) {
+
+        function deleteInvoice(id, btn) {
+
             if (!confirm("Czy na pewno chcesz usunąć fakturę?"))
                 return;
 
@@ -76,7 +78,8 @@
                 },
                 success: function (data) {
                     if (data.Success) {
-                        //usuwanie
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
                     } else {
                         alert(data.Message);
                     }
@@ -85,8 +88,9 @@
                     alert(data.Message);
                 },
                 dataType: 'json'
-
             });
+
         }
+
     </script>
 }

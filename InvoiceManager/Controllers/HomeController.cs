@@ -32,7 +32,8 @@ namespace InvoiceManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var invoice = id == 0 ? GetNewInvoice(userId) :
+            var invoice = id == 0 ?
+                GetNewInvoice(userId) :
                 _invoiceRepository.GetInvoice(id, userId);
 
             var vm = PrepareInvoiceVm(invoice, userId);
@@ -47,8 +48,7 @@ namespace InvoiceManager.Controllers
             return new EditInvoiceViewModel
             {
                 Invoice = invoice,
-                Heading = invoice.Id == 0 ? "Dodawanie nowej faktury" :
-                "Faktura",
+                Heading = invoice.Id == 0 ? "Dodawanie nowej faktury" : "Faktura",
                 Clients = _clientRepository.GetClients(userId),
                 MethodOfPayments = _invoiceRepository.GetMethodsOfPayment()
             };
@@ -69,7 +69,8 @@ namespace InvoiceManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var invoicePosition = invoicePositionId == 0 ? GetNewPosition(invoiceId, invoicePositionId) :
+            var invoicePosition = invoicePositionId == 0 ?
+                GetNewPosition(invoiceId, invoicePositionId) :
                 _invoiceRepository.GetInvoicePosition(invoicePositionId, userId);
 
             var vm = PrepareInvoicePositionVm(invoicePosition);
@@ -129,11 +130,12 @@ namespace InvoiceManager.Controllers
             _invoiceRepository
                 .UpdateInvoiceValue(invoicePosition.InvoiceId, userId);
 
-            return RedirectToAction("Invoice",new { id=invoicePosition.InvoiceId});
+            return RedirectToAction("Invoice",
+                new { id = invoicePosition.InvoiceId });
         }
 
         [HttpPost]
-        public ActionResult Delete (int id)
+        public ActionResult Delete(int id)
         {
             try
             {
