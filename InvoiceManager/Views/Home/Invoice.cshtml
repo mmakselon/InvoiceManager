@@ -101,7 +101,7 @@
 
         }
 
-        function deleteInvoicePosition() {
+        function deleteInvoicePosition(id, invoiceId, btn) {
             if (!confirm("Czy na pewno chcesz usunąć pozycję?"))
                 return;
 
@@ -115,7 +115,7 @@
                 success: function (data) {
                     if (data.Success) {
                         var row = btn.parentNode.parentNode;
-                        row.parentNode.remoweChild(row);
+                        row.parentNode.removeChild(row);
 
                         $('#Invoice_Value').val(data.InvoiceValue.toFixed(2).replace(".",","));
                     } else {
