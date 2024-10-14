@@ -32,8 +32,7 @@ namespace InvoiceManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var invoice = id == 0 ?
-                GetNewInvoice(userId) :
+            var invoice = id == 0 ? GetNewInvoice(userId) :
                 _invoiceRepository.GetInvoice(id, userId);
 
             var vm = PrepareInvoiceVm(invoice, userId);
@@ -48,7 +47,8 @@ namespace InvoiceManager.Controllers
             return new EditInvoiceViewModel
             {
                 Invoice = invoice,
-                Heading = invoice.Id == 0 ? "Dodawanie nowej faktury" : "Faktura",
+                Heading = invoice.Id == 0 ? "Dodawanie nowej faktury" :
+                "Faktura",
                 Clients = _clientRepository.GetClients(userId),
                 MethodOfPayments = _invoiceRepository.GetMethodsOfPayment()
             };
@@ -69,8 +69,7 @@ namespace InvoiceManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var invoicePosition = invoicePositionId == 0 ?
-                GetNewPosition(invoiceId, invoicePositionId) :
+            var invoicePosition = invoicePositionId == 0 ? GetNewPosition(invoiceId, invoicePositionId) :
                 _invoiceRepository.GetInvoicePosition(invoicePositionId, userId);
 
             var vm = PrepareInvoicePositionVm(invoicePosition);
@@ -105,6 +104,12 @@ namespace InvoiceManager.Controllers
             var userId = User.Identity.GetUserId();
             invoice.UserId = userId;
 
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareInvoiceVm(invoice, userId);
+                return View("Invoice", vm);
+            }
+
             if (invoice.Id == 0)
                 _invoiceRepository.Add(invoice);
             else
@@ -120,6 +125,12 @@ namespace InvoiceManager.Controllers
             var product = _productRepository
                 .GetProduct(invoicePosition.ProductId);
 
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareInvoicePositionVm(invoicePosition);
+                return View("InvoicePosition", vm);
+            }
+
             invoicePosition.Value = invoicePosition.Quantity * product.Value;
 
             if (invoicePosition.Id == 0)
@@ -130,12 +141,11 @@ namespace InvoiceManager.Controllers
             _invoiceRepository
                 .UpdateInvoiceValue(invoicePosition.InvoiceId, userId);
 
-            return RedirectToAction("Invoice",
-                new { id = invoicePosition.InvoiceId });
+            return RedirectToAction("Invoice",new { id=invoicePosition.InvoiceId});
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Delete (int id)
         {
             try
             {
