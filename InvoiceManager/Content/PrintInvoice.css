@@ -4,6 +4,11 @@
     margin-top: 20px;
     margin-bottom:20px;
 }
+
+nav, footer {
+    display: none !important;
+}
+
 .invoice-font {
     font-size: 18px;
     text-align: center;

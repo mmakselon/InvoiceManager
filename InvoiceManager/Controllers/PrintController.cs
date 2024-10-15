@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InvoiceManager.Models.Repositories;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +11,14 @@ namespace InvoiceManager.Controllers
     [Authorize]
     public class PrintController : Controller
     {
-        public ActionResult Index()
+        private InvoiceRepository _invoiceRepository = new InvoiceRepository();
+
+        public ActionResult InvoiceTemplate(int id)
         {
-            return View();
+            var userId = User.Identity.GetUserId();
+            var invoice = _invoiceRepository.GetInvoice(id, userId);
+
+            return View(invoice);
         }
     }
 }

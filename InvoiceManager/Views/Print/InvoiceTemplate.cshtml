@@ -4,8 +4,8 @@
     ViewBag.Title = "Faktura";
 }
 
-<link href="@Url.Content"("~/Content/ProntInvoice.css")" rel="stylesheet" type="text/css"/>
-      
+<link href="@Url.Content("~/Content/PrintInvoice.css")" rel="stylesheet" type="text/css" />
+
 <div class="invoice-font">
 
     <div class="row">
@@ -66,8 +66,8 @@
                     Nabywca:
                 </div>
                 <div>@Model.Client.Name</div>
-                <div>@Model.Client.Address.Street @Model.Client.Address.Number</div>
-                <div>@Model.Client.Address.PostalCode @Model.Client.Address.City</div>
+                <div>@Model.Client.Addresss.Street @Model.Client.Addresss.Number</div>
+                <div>@Model.Client.Addresss.PostalCode @Model.Client.Addresss.City</div>
                 <div>E-mail: @Model.Client.Email</div>
             </div>
         </div>
