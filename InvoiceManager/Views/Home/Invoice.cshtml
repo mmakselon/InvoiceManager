@@ -21,7 +21,7 @@
     <div class="col-lg-6">
         @using (Html.BeginForm("Invoice", "Home"))
         {
-            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
 
             if (Model.Invoice.Id == 0)
             {
