@@ -128,6 +128,19 @@
             });
         }
 
+        function printPdf() {
+            var url = '@Url.Action("PrintInvoice", "Print")' + '?id=' + '@Model.Invoice.Id';
+
+            var printWindow = window.open(url, '', 'width=800,height=600');
+
+            printWindow.onload = function () {
+                printWindow.print();
+                printWindow.onafterprint = function () {
+                    printWindow.close();
+                }
+            };
+        }
+
         function deleteInvoicePosition(id, invoiceId, btn) {
             if (!confirm("Czy na pewno chcesz usunąć pozycję?"))
                 return;
